@@ -1,1 +1,199 @@
+DBMS Record Program 1:
+---------------------
+
+
+
+
+71. List all employees who have at least one person reporting to them
+mysql> select empno,ename,job,deptno from emp e where exists (select empno from emp where emp.mgr=e.empno);
++-------+-------+-----------+--------+
+| empno | ename | job       | deptno |
++-------+-------+-----------+--------+
+|  7566 | JONES | MANAGER   | 	20 |
+|  7698 | BLAKE | MANAGER   | 	30 |
+|  7782 | CLARK | MANAGER   | 	10 |
+|  7788 | SCOTT | ANALYST   | 	20 |
+|  7839 | KING  | PRESIDENT | 	10 |
+|  7902 | FORD  | ANALYST   | 	20 |
++-------+-------+-----------+--------+
+6 rows in set (0.00 sec)
+ 72. List the employee details iff more than 2 employees are present in deptno 10.
+mysql> select * from emp where deptno=10 and exists (select count(*) from emp where deptno=10 group by deptno having count(*) >2);
++-------+--------+-----------+------+------------+---------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal     | comm | deptno |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 | NULL |     10 |
++-------+--------+-----------+------+------------+---------+------+--------+
+3 rows in set (0.00 sec)
+73. List all the employee details who do not manage any one
+mysql> select ename,job from emp e where not exists (select mgr from emp where mgr=e.empno);
++--------+----------+
+| ename  | job      |
++--------+----------+
+| SMITH  | CLERK    |
+| ALLEN  | SALESMAN |
+| WARD   | SALESMAN |
+| MARTIN | SALESMAN |
+| TURNER | SALESMAN |
+| ADAMS  | CLERK    |
+| JAMES  | CLERK    |
+| MILLER | CLERK    |
++--------+----------+
+8 rows in set (0.00 sec)
+51. List the deptno(s) and names in department name order.
+mysql> select deptno,dname from dept order by dname;
++--------+------------+
+| deptno | dname      |
++--------+------------+
+| 	10 | ACCOUNTING |
+| 	40 | OPERATIONS |
+| 	20 | RESEARCH   |
+| 	30 | SALES  	|
++--------+------------+
+4 rows in set (0.00 sec)
+52. List the details of employees in departments 10 and 20 in alphabetical order of name
+mysql> select * from emp where deptno in (10,20) order by ename;
++-------+--------+-----------+------+------------+---------+------+--------+
+| empno | ename  | job   	| mgr  | hiredate   | sal 	| comm | deptno |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-12-01 | 1100.00 | NULL | 	20 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL | 	10 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL | 	20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL | 	20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL | 	10 |
+|  7934 | MILLER | CLERK 	| 7782 | 1982-01-23 | 1300.00 | NULL | 	10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL | 	20 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 | NULL | 	20 |
++-------+--------+-----------+------+------------+---------+------+--------+
+8 rows in set (0.00 sec)
+53. List names and jobs of all clerks in department 20 in alphabetical order of name
+mysql> select ename,job from emp where deptno=20 and job='clerk' order by ename;
++-------+-------+
+| ename | job   |
++-------+-------+
+| ADAMS | CLERK |
+| SMITH | CLERK |
++-------+-------+
+2 rows in set (0.00 sec)
+54. List the names of all employees who have LL and LT in their names
+mysql> select ename from emp where ename like '%ll%' or '%lt%';
++--------+
+| ename  |
++--------+
+| ALLEN  |
+| MILLER |
++--------+
+2 rows in set, 1 warning (0.00 sec)
+55. List names and total remuneration for all employees
+mysql> select ename,(sal+ifnull(comm,0)) "total remuneration" from emp;
++--------+--------------------+
+| ename  | total remuneration |
++--------+--------------------+
+| SMITH  |         	800.00 |
+| ALLEN  |        	1900.00 |
+| WARD   |        	1750.00 |
+| JONES  |            2975.00 |
+| MARTIN |            2650.00 |
+| BLAKE  |        	2850.00 |
+| CLARK  |        	2450.00 |
+| SCOTT  |        	3000.00 |
+| KING   |        	5000.00 |
+| TURNER |            1500.00 |
+| ADAMS  |        	1100.00 |
+| JAMES  |         	950.00 |
+| FORD   |        	3000.00 |
+| MILLER |            1300.00 |
++--------+--------------------+
+14 rows in set (0.00 sec)
+62. List the jobs common to department 20 and 30
+mysql> select distinct job from emp where deptno=20 and job in (select job from emp where deptno=30);
++---------+
+| job 	|
++---------+
+| CLERK   |
+| MANAGER |
++---------+
+2 rows in set (0.00 sec)
+               
+74. List the employee names whose salary is greater than the lowest salary of an employee belonging to deptno 20
+mysql> select ename from emp where sal > any (select sal from emp where deptno=20);
++--------+
+| ename  |
++--------+
+| ALLEN  |
+| WARD   |
+| JONES  |
+| MARTIN |
+| BLAKE  |
+| CLARK  |
+| SCOTT  |
+| KING   |
+| TURNER |
+| ADAMS  |
+| JAMES  |
+| FORD   |
+| MILLER |
++--------+
+13 rows in set (0.00 sec)
+75. List the employee details of those employees whose salary is greater than any of the managers
+mysql> select empno,ename,sal from emp where sal > any (select sal from emp where job ='manager');
++-------+-------+---------+
+| empno | ename | sal     |
++-------+-------+---------+
+|  7566 | JONES | 2975.00 |
+|  7698 | BLAKE | 2850.00 |
+|  7788 | SCOTT | 3000.00 |
+|  7839 | KING  | 5000.00 |
+|  7902 | FORD  | 3000.00 |
++-------+-------+---------+
+5 rows in set (0.00 sec)
+76. List the employee names whose salary is greater than the highest salary of all employee belonging to dept 20
+mysql> select ename from emp where sal > all (select sal from emp where deptno=20);
++-------+
+| ename |
++-------+
+| KING  |
++-------+
+1 row in set (0.00 sec)
+77. List the employee details of those employees whose salary is more than the highest paid manager
+mysql> select empno,ename,sal from emp where sal > all (select sal from emp where job='manager');
++-------+-------+---------+
+| empno | ename | sal     |
++-------+-------+---------+
+|  7788 | SCOTT | 3000.00 |
+|  7839 | KING  | 5000.00 |
+|  7902 | FORD  | 3000.00 |
++-------+-------+---------+
+3 rows in set (0.00 sec)
+102. To change the name of the table employee to my_employee
+Rename emp to my_employee;
+Note: this may not work in mysql 5.5 but working in mysql 8.0
+68. Find the details of the department whose manager’s empno is 7698
+mysql> select * from dept where deptno= (select distinct deptno from emp where mgr=7698);
++--------+-------+---------+
+| deptno | dname | loc     |
++--------+-------+---------+
+|     30 | SALES | CHICAGO |
++--------+-------+---------+
+1 row in set (0.00 sec)
+
+59. List all the employees who joined the company before their manager
+mysql> select e.ename,e.hiredate,m.ename,m.mgr,m.hiredate from emp e,emp m where e.mgr=m.empno and e.hiredate <m.hiredate;
++-------+------------+-------+------+------------+
+| ename | hiredate   | ename | mgr  | hiredate   |
++-------+------------+-------+------+------------+
+| ALLEN | 1981-02-20 | BLAKE | 7839 | 1981-05-01 |
+| WARD  | 1981-02-22 | BLAKE | 7839 | 1981-05-01 |
+| JONES | 1981-04-02 | KING  | NULL | 1981-11-17 |
+| BLAKE | 1981-05-01 | KING  | NULL | 1981-11-17 |
+| CLARK | 1981-06-09 | KING  | NULL | 1981-11-17 |
+| SMITH | 1980-12-17 | FORD  | 7566 | 1981-12-03 |
++-------+------------+-------+------+------------+
+6 rows in set (0.00 sec)
+28. List the names of employees who are more than 25 years old in the organization
+
+
+
 
