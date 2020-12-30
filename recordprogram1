@@ -10,7 +10,8 @@ P. Sasidhar
 
 DBMS Record Program 1:
 ---------------------
-CREATE TABLE emp (empnodecimal(4,0) NOT NULL, ename varchar(10) default NULL,job varchar(9) default NULL, mgr decimal(4,0) default NULL,hiredate date default NULL, sal decimal(7,2) default NULL,comm decimal(7,2) default NULL, deptno decimal(2,0) default NULL );
+
+mysql> CREATE TABLE emp (empnodecimal(4,0) NOT NULL, ename varchar(10) default NULL,job varchar(9) default NULL, mgr decimal(4,0) default NULL,hiredate date default NULL, sal decimal(7,2) default NULL,comm decimal(7,2) default NULL, deptno decimal(2,0) default NULL );
 CREATE TABLE dept (deptnodecimal(2,0) default NULL, dname varchar(14) default NULL,loc varchar(13) default NULL );
 INSERT INTO emp VALUES (7369,'SMITH','CLERK',7902,'1980-12-17 ',800.00,NULL,20);
 INSERT INTO emp VALUES (7499,'ALLEN','SALESMAN',7698,'1981-02-20', 1600.00, 300.00,30);
@@ -502,10 +503,27 @@ mysql> SELECT ename, sal, sal*.10 PF FROM emp;
 +--------+---------+----------+
 14 rows in set (0.00 sec)
 
-
-
 28. List the names of employees who are more than 25 years old in the organization 
-
+mysql> select * from (select ename,timestampdiff(year,hiredate,current_date) as exp from emp) emp where exp>25;
++--------+------+
+| ename  | exp  |
++--------+------+
+| SMITH  |   40 |
+| ALLEN  |   39 |
+| WARD   |   39 |
+| JONES  |   39 |
+| MARTIN |   39 |
+| BLAKE  |   39 |
+| CLARK  |   39 |
+| SCOTT  |   38 |
+| KING   |   39 |
+| TURNER |   39 |
+| ADAMS  |   37 |
+| JAMES  |   39 |
+| FORD   |   39 |
+| MILLER |   38 |
++--------+------+
+14 rows in set (0.04 sec)
 
 
 
@@ -1597,6 +1615,26 @@ mysql> select e.ename,e.hiredate,m.ename,m.mgr,m.hiredate from emp e,emp m where
 +-------+------------+-------+------+------------+
 6 rows in set (0.00 sec)
 28. List the names of employees who are more than 25 years old in the organization
+mysql> select * from (select ename,timestampdiff(year,hiredate,current_date) as exp from emp) emp where exp>25;
++--------+------+
+| ename  | exp  |
++--------+------+
+| SMITH  |   40 |
+| ALLEN  |   39 |
+| WARD   |   39 |
+| JONES  |   39 |
+| MARTIN |   39 |
+| BLAKE  |   39 |
+| CLARK  |   39 |
+| SCOTT  |   38 |
+| KING   |   39 |
+| TURNER |   39 |
+| ADAMS  |   37 |
+| JAMES  |   39 |
+| FORD   |   39 |
+| MILLER |   38 |
++--------+------+
+14 rows in set (0.04 sec)
 
 
 
