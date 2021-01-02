@@ -1115,16 +1115,13 @@ mysql> select job,avg(sal) from emp group by job order by avg(sal) desc limit 1;
 1 row in set (0.00 sec)
 
 68. Find the details of the department whose manager’s empno is 7698
-mysql> select e.empno,e.ename,e.deptno,d.dname from emp e, dept d where e.empno=7698;
-+-------+-------+--------+------------+
-| empno | ename | deptno | dname      |
-+-------+-------+--------+------------+
-|  7698 | BLAKE |     30 | ACCOUNTING |
-|  7698 | BLAKE |     30 | RESEARCH   |
-|  7698 | BLAKE |     30 | SALES      |
-|  7698 | BLAKE |     30 | OPERATIONS |
-+-------+-------+--------+------------+
-4 rows in set (0.00 sec)
+mysql> select * from dept where deptno= (select distinct deptno from emp where mgr=7698);
++--------+-------+---------+
+| deptno | dname | loc     |
++--------+-------+---------+
+|     30 | SALES | CHICAGO |
++--------+-------+---------+
+1 row in set (0.00 sec)
 
 69. List the names of the employees who earn lowest salary in each department
 mysql> SELECT ename ,sal, deptno FROM emp WHERE sal IN ( SELECT MIN(sal) FROM emp GROUP BY deptno);
