@@ -1024,23 +1024,24 @@ Mysql> select distinct job from emp where deptno=20 or deptno=30;
 4 rows in set (0.01 sec)
 
 61. Display empno, ename from emp where deptno is 10 and 30 in ascending order of empno
-mysql> select empno,ename from emp where deptno=20 or deptno=30 order by deptnoasc;
+
+mysql> select empno,ename from emp where deptno=10 or deptno=30 order by deptno asc;
 +-------+--------+
 | empno | ename  |
 +-------+--------+
-|  7369 | SMITH  |
-|  7876 | ADAMS  |
-|  7788 | SCOTT  |
-|  7902 | FORD   |
-|  7566 | JONES  |
-|  7654 | MARTIN |
-|  7521 | WARD   |
-|  7844 | TURNER |
+|  7782 | CLARK  |
+|  7839 | KING   |
+|  7934 | MILLER |
 |  7499 | ALLEN  |
-|  7900 | JAMES  |
+|  7521 | WARD   |
+|  7654 | MARTIN |
 |  7698 | BLAKE  |
+|  7844 | TURNER |
+|  7900 | JAMES  |
 +-------+--------+
-11 rows in set (0.00 sec)
+9 rows in set (0.00 sec)
+
+
 62. List the jobs common to department 20 and 30
 mysql> select job from emp where deptno=30 and job in (select job from emp where deptno=20);
 +---------+
