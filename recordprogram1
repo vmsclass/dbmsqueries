@@ -957,6 +957,30 @@ mysql> select e.empno,e.ename,e.deptno,d.dname from emp e, dept d where e.deptno
 |  7934 | MILLER |     10 | ACCOUNTING |
 +-------+--------+--------+------------+
 14 rows in set (0.00 sec)
+
+or
+
+mysql> select e.empno,e.ename,e.deptno,d.dname from emp e inner join dept d on e.deptno=d.deptno;
++-------+--------+--------+------------+
+| empno | ename  | deptno | dname      |
++-------+--------+--------+------------+
+|  7369 | SMITH  |     20 | RESEARCH   |
+|  7499 | ALLEN  |     30 | SALES      |
+|  7521 | WARD   |     30 | SALES      |
+|  7566 | JONES  |     20 | RESEARCH   |
+|  7654 | MARTIN |     30 | SALES      |
+|  7698 | BLAKE  |     30 | SALES      |
+|  7782 | CLARK  |     10 | ACCOUNTING |
+|  7788 | SCOTT  |     20 | RESEARCH   |
+|  7839 | KING   |     10 | ACCOUNTING |
+|  7844 | TURNER |     30 | SALES      |
+|  7876 | ADAMS  |     20 | RESEARCH   |
+|  7900 | JAMES  |     30 | SALES      |
+|  7902 | FORD   |     20 | RESEARCH   |
+|  7934 | MILLER |     10 | ACCOUNTING |
++-------+--------+--------+------------+
+14 rows in set (0.00 sec)
+
 59. List all the employees who joined the company before their manager 
 mysql> select e.ename,e.hiredate,m.ename,m.mgr,m.hiredate from emp e,emp m where e.mgr=m.empno and e.hiredate <m.hiredate;
 +-------+------------+-------+------+------------+
@@ -971,6 +995,22 @@ mysql> select e.ename,e.hiredate,m.ename,m.mgr,m.hiredate from emp e,emp m where
 +-------+------------+-------+------+------------+
 6 rows in set (0.00 sec)
 
+or
+
+mysql> select e.ename,e.hiredate,m.ename,m.mgr,m.hiredate from emp e inner join emp m on e.mgr=m.empno and e.hiredate <m.hiredate;
++-------+------------+-------+------+------------+
+| ename | hiredate   | ename | mgr  | hiredate   |
++-------+------------+-------+------+------------+
+| ALLEN | 1981-02-20 | BLAKE | 7839 | 1981-05-01 |
+| WARD  | 1981-02-22 | BLAKE | 7839 | 1981-05-01 |
+| JONES | 1981-04-02 | KING  | NULL | 1981-11-17 |
+| BLAKE | 1981-05-01 | KING  | NULL | 1981-11-17 |
+| CLARK | 1981-06-09 | KING  | NULL | 1981-11-17 |
+| SMITH | 1980-12-17 | FORD  | 7566 | 1981-12-03 |
++-------+------------+-------+------+------------+
+6 rows in set (0.00 sec)
+
+
 60. Display the different designations in department 20 and 30
 Mysql> select distinct job from emp where deptno=20 or deptno=30;
 +----------+
@@ -982,6 +1022,7 @@ Mysql> select distinct job from emp where deptno=20 or deptno=30;
 | ANALYST  |
 +----------+
 4 rows in set (0.01 sec)
+
 61. Display empno, ename from emp where deptno is 10 and 30 in ascending order of empno
 mysql> select empno,ename from emp where deptno=20 or deptno=30 order by deptnoasc;
 +-------+--------+
