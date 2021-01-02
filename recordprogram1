@@ -911,7 +911,15 @@ Mysql>select ename,sal+ifNULL(comm,0) as “total_remuneration” from emp group
 
 56. List name, annual salary and commission of all salespeople whose monthly salary is greater than their commission, the output should be ordered by salary, highest first. If two or more employees have the same salary sort by employee name within the highest salary order
 
-
+mysql> select ename, 12*sal "annual", (12*ifnull(comm,0)) as "totalcomm" from emp where job='salesman' and sal>comm order by annual,ename;
++--------+----------+-----------+
+| ename  | annual   | totalcomm |
++--------+----------+-----------+
+| WARD   | 15000.00 |   6000.00 |
+| TURNER | 18000.00 |      0.00 |
+| ALLEN  | 19200.00 |   3600.00 |
++--------+----------+-----------+
+3 rows in set (0.00 sec)
 
 
 57. List lowest paid employees working for each manager, sort the output by salary 
