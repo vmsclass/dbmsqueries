@@ -1051,18 +1051,19 @@ mysql> select job from emp where deptno=30 and job in (select job from emp where
 | CLERK   |
 +---------+
 2 rows in set (0.00 sec)
+
 63. List the jobs unique to department 20
-mysql> select distinct job from emp where deptno=20;
+
+mysql> select distinct job from emp where deptno=20 and job not in (select distinct job from emp where deptno in (10,30));
 +---------+
 | job     |
 +---------+
-| CLERK   |
-| MANAGER |
 | ANALYST |
 +---------+
-3 rows in set (0.00 sec)
+1 row in set (0.00 sec)
+
 64. List the employees belonging to the department of MILLER
-mysql> select ename from emp where deptno=10;
+mysql> select ename from emp where deptno = (select deptno from emp where ename='miller');
 +--------+
 | ename  |
 +--------+
@@ -1071,6 +1072,7 @@ mysql> select ename from emp where deptno=10;
 | MILLER |
 +--------+
 3 rows in set (0.00 sec)
+ 
  65. List the name of employee who draws the highest salary 
 mysql> select ename,sal from emp where sal in (SELECT MAX(sal) FROM emp );
 +-------+---------+
@@ -1079,8 +1081,18 @@ mysql> select ename,sal from emp where sal in (SELECT MAX(sal) FROM emp );
 | KING  | 5000.00 |
 +-------+---------+
 1 row in set (0.00 sec)
+
+or
+mysql> select ename,sal from emp where sal = (SELECT MAX(sal) FROM emp );
++-------+---------+
+| ename | sal     |
++-------+---------+
+| KING  | 5000.00 |
++-------+---------+
+1 row in set (0.00 sec)
+
 66. List all employee details of an employee whose salary is greater than the average salary of employees whose hiredate is before ’01-APR-1981’ 
-mysql> select * from emp where sal >=(select avg(sal) from emp where hiredate > "1981-04-01") ;
+mysql> select * from emp where sal >(select avg(sal) from emp where hiredate > "1981-04-01") ;
 +-------+-------+-----------+------+------------+---------+------+--------+
 | empno | ename | job       | mgr  | hiredate   | sal     | comm | deptno |
 +-------+-------+-----------+------+------------+---------+------+--------+
@@ -1092,18 +1104,15 @@ mysql> select * from emp where sal >=(select avg(sal) from emp where hiredate > 
 |  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
 +-------+-------+-----------+------+------------+---------+------+--------+
 6 rows in set (0.00 sec)
+
 67. List the job with highest average salary 
-mysql> SELECT avg(sal), job FROM emp GROUP BY job;
-+-------------+-----------+
-| avg(sal)    | job       |
-+-------------+-----------+
-| 3000.000000 | ANALYST   |
-| 1037.500000 | CLERK     |
-| 2758.333333 | MANAGER   |
-| 5000.000000 | PRESIDENT |
-| 1400.000000 | SALESMAN  |
-+-------------+-----------+
-5 rows in set (0.00 sec)
+mysql> select job,avg(sal) from emp group by job order by avg(sal) desc limit 1;
++-----------+-------------+
+| job       | avg(sal)    |
++-----------+-------------+
+| PRESIDENT | 5000.000000 |
++-----------+-------------+
+1 row in set (0.00 sec)
 
 68. Find the details of the department whose manager’s empno is 7698
 mysql> select e.empno,e.ename,e.deptno,d.dname from emp e, dept d where e.empno=7698;
@@ -1129,16 +1138,18 @@ mysql> SELECT ename ,sal, deptno FROM emp WHERE sal IN ( SELECT MIN(sal) FROM em
 3 rows in set (0.00 sec)
 
 70. List employee details who earn salary greater than the average salary
-mysql> SELECT * FROM emp WHERE sal>ALL(SELECT avg(sal)FROM emp GROUP BY deptno);
+mysql> SELECT * FROM emp WHERE sal>(SELECT avg(sal)FROM emp);
 +-------+-------+-----------+------+------------+---------+------+--------+
-| empno | ename | job       | mgr  |hiredate   | sal     | comm | deptno |
+| empno | ename | job       | mgr  | hiredate   | sal     | comm | deptno |
 +-------+-------+-----------+------+------------+---------+------+--------+
 |  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7698 | BLAKE | MANAGER   | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
 |  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
 |  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
 |  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
 +-------+-------+-----------+------+------------+---------+------+--------+
-4 rows in set (0.00 sec)
+6 rows in set (0.00 sec)
 
 71. List all employees who have at least one person reporting to them 
 mysql> select empno,ename,job,deptno from emp e where exists (select empno from emp where emp.mgr=e.empno);
