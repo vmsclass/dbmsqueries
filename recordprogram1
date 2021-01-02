@@ -923,15 +923,19 @@ mysql> select ename, 12*sal "annual", (12*ifnull(comm,0)) as "totalcomm" from em
 
 
 57. List lowest paid employees working for each manager, sort the output by salary 
-mysql> select ename,sal from emp where job='manager' order by sal;
-+-------+---------+
-| ename | sal     |
-+-------+---------+
-| CLARK | 2450.00 |
-| BLAKE | 2850.00 |
-| JONES | 2975.00 |
-+-------+---------+
-3 rows in set (0.00 sec)
+mysql> select mgr,min(sal) from emp where mgr is not null group by mgr order by min(sal);
++------+----------+
+| mgr  | min(sal) |
++------+----------+
+| 7902 |   800.00 |
+| 7698 |   950.00 |
+| 7788 |  1100.00 |
+| 7782 |  1300.00 |
+| 7839 |  2450.00 |
+| 7566 |  3000.00 |
++------+----------+
+6 rows in set (0.00 sec)
+
 58. List the employee numbers, names, department numbers and the department name 
 mysql> select e.empno,e.ename,e.deptno,d.dname from emp e, dept d where e.deptno=d.deptno;
 +-------+--------+--------+------------+
