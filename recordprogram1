@@ -254,6 +254,25 @@ mysql> select ename from emp where job!='MANAGER';
 +--------+
 11 rows in set (0.00 sec)
 
+or
+mysql> select ename from emp where job <> 'manager';
++--------+
+| ename  |
++--------+
+| SMITH  |
+| ALLEN  |
+| WARD   |
+| MARTIN |
+| SCOTT  |
+| KING   |
+| TURNER |
+| ADAMS  |
+| JAMES  |
+| FORD   |
+| MILLER |
++--------+
+11 rows in set (0.00 sec)
+
 13. List the name of the employees whose employee numbers are 7369, 7521, 7839, 7934, 7788 
 mysql> select ename from emp where empno in (7369,7521,7839,7934,7788);
 +--------+
@@ -266,6 +285,20 @@ mysql> select ename from emp where empno in (7369,7521,7839,7934,7788);
 | MILLER |
 +--------+
 5 rows in set (0.00 sec)
+
+or
+mysql> select ename,empno from emp where empno in (7369,7521,7839,7934,7788);
++--------+-------+
+| ename  | empno |
++--------+-------+
+| SMITH  |  7369 |
+| WARD   |  7521 |
+| SCOTT  |  7788 |
+| KING   |  7839 |
+| MILLER |  7934 |
++--------+-------+
+5 rows in set (0.00 sec)
+
 
 14. List the employee details not belonging to the department 10, 30 and 40 
 mysql> select ename from emp where deptno not in(10,30,40);
@@ -293,6 +326,7 @@ mysql> select ename,sal from emp where sal between 1000 and 2000;
 | MILLER | 1300.00 |
 +--------+---------+
 6 rows in set (0.02 sec)
+
 16. List employee names who have joined before 30th June 1981 and after December1981
 mysql> select ename,hiredate from emp where hiredate not between '1981-06-30' and '1981-12-00';
 +--------+------------+
@@ -363,15 +397,7 @@ mysql> select ename,comm from emp where comm is null;
 10 rows in set (0.00 sec)
 
 19. List the name of the employee and job of the employee who does not report to anybody (managers is NULL)
-mysql> select ename from emp where job='president';
-+-------+
-| ename |
-+-------+
-| KING  |
-+-------+
-1 row in set (0.00 sec)
-(Or)
-mysql> select ename,job from emp where job='president';
+mysql> select ename,job from emp where mgr is null;
 +-------+-----------+
 | ename | job       |
 +-------+-----------+
@@ -379,62 +405,39 @@ mysql> select ename,job from emp where job='president';
 +-------+-----------+
 1 row in set (0.00 sec)
 
+
 20. List the employees not assigned to any department 
-mysql> select dname from dept where deptno not in (select deptno from emp);
-+------------+
-| dname      |
-+------------+
-| OPERATIONS |
-+------------+
-1 row in set (0.01 sec)
+mysql> select ename from emp where deptno is null;
+Empty set (0.00 sec)
+
 
 21. List the employees who are eligible for commission 
-mysql> select ename from emp where job is not null;
-+--------+
-| ename  |
-+--------+
-| SMITH  |
-| ALLEN  |
-| WARD   |
-| JONES  |
-| MARTIN |
-| BLAKE  |
-| CLARK  |
-| SCOTT  |
-| KING   |
-| TURNER |
-| ADAMS  |
-| JAMES  |
-| FORD   |
-| MILLER |
-+--------+
-14 rows in set (0.00 sec)
-
-22. List the details of employees whose salary is greater than 2000 and commission is null. 
-mysql> SELECT * FROM emp
-    -> where sal>
-    ->ALL(SELECT avg(sal) FROM emp GROUP BY deptno);
-+-------+-------+-----------+------+------------+---------+------+--------+
-| empno | ename | job       | mgr  |hiredate   | sal     | comm | deptno |
-+-------+-------+-----------+------+------------+---------+------+--------+
-|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
-|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
-|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
-|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
-+-------+-------+-----------+------+------------+---------+------+--------+
-4 rows in set (0.01 sec)
-(or)
-mysql> SELECT * FROM emp where sal>ALL(SELECT avg(sal) FROM emp GROUP BY deptno);
-+-------+-------+-----------+------+------------+---------+------+--------+
-| empno | ename | job       | mgr  |hiredate   | sal     | comm | deptno |
-+-------+-------+-----------+------+------------+---------+------+--------+
-|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
-|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
-|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
-|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
-+-------+-------+-----------+------+------------+---------+------+--------+
+mysql> select * from emp where comm is not null;
++-------+--------+----------+------+------------+---------+---------+--------+
+| empno | ename  | job      | mgr  | hiredate   | sal     | comm    | deptno |
++-------+--------+----------+------+------------+---------+---------+--------+
+|  7499 | ALLEN  | SALESMAN | 7698 | 1981-02-20 | 1600.00 |  300.00 |     30 |
+|  7521 | WARD   | SALESMAN | 7698 | 1981-02-22 | 1250.00 |  500.00 |     30 |
+|  7654 | MARTIN | SALESMAN | 7698 | 1981-09-28 | 1250.00 | 1400.00 |     30 |
+|  7844 | TURNER | SALESMAN | 7698 | 1981-09-08 | 1500.00 |    0.00 |     30 |
++-------+--------+----------+------+------------+---------+---------+--------+
 4 rows in set (0.00 sec)
 
+
+22. List the details of employees whose salary is greater than 2000 and commission is null. 
+
+mysql> select * from emp where sal > 2000 and comm is null;
++-------+-------+-----------+------+------------+---------+------+--------+
+| empno | ename | job       | mgr  | hiredate   | sal     | comm | deptno |
++-------+-------+-----------+------+------------+---------+------+--------+
+|  7566 | JONES | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7698 | BLAKE | MANAGER   | 7839 | 1981-05-01 | 2850.00 | NULL |     30 |
+|  7782 | CLARK | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7788 | SCOTT | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
+|  7839 | KING  | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7902 | FORD  | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
++-------+-------+-----------+------+------------+---------+------+--------+
+6 rows in set (0.00 sec)
 
 
 23. List the employees whose names start with an “S” 
@@ -472,6 +475,24 @@ mysql> select ename from emp where length(ename)=5;
 | JAMES |
 +-------+
 8 rows in set (0.00 sec)
+
+or
+
+mysql> select ename from emp where ename like '_____';
++-------+
+| ename |
++-------+
+| SMITH |
+| ALLEN |
+| JONES |
+| BLAKE |
+| CLARK |
+| SCOTT |
+| ADAMS |
+| JAMES |
++-------+
+8 rows in set (0.00 sec)
+
 26. List the employee names having ‘I’ as the second character 
 mysql> select ename from emp where ename like '_i%';
 +--------+
@@ -528,7 +549,7 @@ mysql> select * from (select ename,timestampdiff(year,hiredate,current_date) as 
 
 
 29. List the empno, ename, sal in ascending order of salary 
-mysql> select empno,ename,sal from emp order by salasc;
+mysql> select empno,ename,sal from emp order by sal asc;
 +-------+--------+---------+
 | empno | ename  |sal     |
 +-------+--------+---------+
@@ -569,49 +590,34 @@ mysql> select empno,ename,sal,hiredate from emp order by hiredate desc;
 |  7499 | ALLEN  | 1600.00 | 1981-02-20 |
 |  7369 | SMITH  |  800.00 | 1980-12-17 |
 +-------+--------+---------+------------+
-14 rows in set (0.00 sec)31. List the employee name, Salary, job and department no. in ascending order of deptno and then on descending order of salary
-mysql> select ename,sal,job,deptno from emp order by deptnoasc;selectename,sal,job,deptno from emp order by salasc;
+14 rows in set (0.00 sec)
+
+31. List the employee name, Salary, job and department no. in ascending order of deptno and then on descending order of salary
+
+mysql> select ename,sal,job,deptno from emp order by deptno,sal desc;
 +--------+---------+-----------+--------+
-| ename  |sal     | job       | deptno |
+| ename  | sal     | job       | deptno |
 +--------+---------+-----------+--------+
-| MILLER | 1300.00 | CLERK     |     10 |
 | KING   | 5000.00 | PRESIDENT |     10 |
 | CLARK  | 2450.00 | MANAGER   |     10 |
+| MILLER | 1300.00 | CLERK     |     10 |
 | FORD   | 3000.00 | ANALYST   |     20 |
-| ADAMS  | 1100.00 | CLERK     |     20 |
 | SCOTT  | 3000.00 | ANALYST   |     20 |
 | JONES  | 2975.00 | MANAGER   |     20 |
+| ADAMS  | 1100.00 | CLERK     |     20 |
 | SMITH  |  800.00 | CLERK     |     20 |
 | BLAKE  | 2850.00 | MANAGER   |     30 |
-| MARTIN | 1250.00 | SALESMAN  |     30 |
+| ALLEN  | 1600.00 | SALESMAN  |     30 |
 | TURNER | 1500.00 | SALESMAN  |     30 |
+| MARTIN | 1250.00 | SALESMAN  |     30 |
 | WARD   | 1250.00 | SALESMAN  |     30 |
 | JAMES  |  950.00 | CLERK     |     30 |
-| ALLEN  | 1600.00 | SALESMAN  |     30 |
 +--------+---------+-----------+--------+
 14 rows in set (0.00 sec)
 
-+--------+---------+-----------+--------+
-| ename  |sal     | job       | deptno |
-+--------+---------+-----------+--------+
-| SMITH  |  800.00 | CLERK     |     20 |
-| JAMES  |  950.00 | CLERK     |     30 |
-| ADAMS  | 1100.00 | CLERK     |     20 |
-| WARD   | 1250.00 | SALESMAN  |     30 |
-| MARTIN | 1250.00 | SALESMAN  |     30 |
-| MILLER | 1300.00 | CLERK     |     10 |
-| TURNER | 1500.00 | SALESMAN  |     30 |
-| ALLEN  | 1600.00 | SALESMAN  |     30 |
-| CLARK  | 2450.00 | MANAGER   |     10 |
-| BLAKE  | 2850.00 | MANAGER   |     30 |
-| JONES  | 2975.00 | MANAGER   |     20 |
-| FORD   | 3000.00 | ANALYST   |     20 |
-| SCOTT  | 3000.00 | ANALYST   |     20 |
-| KING   | 5000.00 | PRESIDENT |     10 |
-+--------+---------+-----------+--------+
-14 rows in set (0.00 sec)
+
 32. List the employee details in ascending order of salary 
-mysql> select * from emp order by salasc;
+mysql> select * from emp order by sal asc;
 +-------+--------+-----------+------+------------+---------+---------+--------+
 | empno | ename  | job       | mgr  | hiredate   | sal     | comm    | deptno |
 +-------+--------+-----------+------+------------+---------+---------+--------+
