@@ -834,17 +834,8 @@ mysql> select sum(sal) as totalsalary,max(sal),min(sal),avg(sal) from emp where 
 |     6000.00 |  3000.00 |  3000.00 | 3000.000000 |
 +-------------+----------+----------+-------------+
 2 rows in set (0.00 sec)
+
 51. List the deptno(s) and names in department name order
-mysql> SELECT DEPTNO,DNAME FROM DEPT ;
-+--------+------------+
-| DEPTNO | DNAME      |
-+--------+------------+
-|     10 | ACCOUNTING |
-|     20 | RESEARCH   |
-|     30 | SALES      |
-|     40 | OPERATIONS |
-+--------+------------+
-4 rows in set (0.00 sec)
 
 mysql> SELECT DEPTNO,DNAME FROM DEPT ORDER BY DNAME ;
 +--------+------------+
@@ -858,15 +849,22 @@ mysql> SELECT DEPTNO,DNAME FROM DEPT ORDER BY DNAME ;
 4 rows in set (0.00 sec)
 
 52. List the details of employees in departments 10 and 20 in alphabetical order of name
-mysql> select ename from emp where deptno=10 and 20 order by ename;
-+--------+
-| ename  |
-+--------+
-| CLARK  |
-| KING   |
-| MILLER |
-+--------+
-3 rows in set (0.00 sec)
+
+mysql> select * from emp where deptno in (10,20) order by ename;
++-------+--------+-----------+------+------------+---------+------+--------+
+| empno | ename  | job       | mgr  | hiredate   | sal     | comm | deptno |
++-------+--------+-----------+------+------------+---------+------+--------+
+|  7876 | ADAMS  | CLERK     | 7788 | 1983-12-01 | 1100.00 | NULL |     20 |
+|  7782 | CLARK  | MANAGER   | 7839 | 1981-06-09 | 2450.00 | NULL |     10 |
+|  7902 | FORD   | ANALYST   | 7566 | 1981-12-03 | 3000.00 | NULL |     20 |
+|  7566 | JONES  | MANAGER   | 7839 | 1981-04-02 | 2975.00 | NULL |     20 |
+|  7839 | KING   | PRESIDENT | NULL | 1981-11-17 | 5000.00 | NULL |     10 |
+|  7934 | MILLER | CLERK     | 7782 | 1982-01-23 | 1300.00 | NULL |     10 |
+|  7788 | SCOTT  | ANALYST   | 7566 | 1982-12-09 | 3000.00 | NULL |     20 |
+|  7369 | SMITH  | CLERK     | 7902 | 1980-12-17 |  800.00 | NULL |     20 |
++-------+--------+-----------+------+------------+---------+------+--------+
+8 rows in set (0.00 sec)
+
 53. List names and jobs of all clerks in department 20 in alphabetical order of name 
 mysql> select ename from emp where job='clerk' and deptno=20 order by ename;
 +-------+
@@ -879,25 +877,7 @@ mysql> select ename from emp where job='clerk' and deptno=20 order by ename;
 
 
 54. List the names of all employees who have LL and LT in their names 
-mysql> select ename from emp where ename like '%ll%' ;
-+--------+
-| ename  |
-+--------+
-| ALLEN  |
-| MILLER |
-+--------+
-2 rows in set (0.00 sec)
-
-mysql> select ename from emp where ename like '%lt%' ;
-Empty set (0.00 sec)
-mysql> select ename from emp where ename like '%tt%' ;
-+-------+
-| ename |
-+-------+
-| SCOTT |
-+-------+
-1 row in set (0.00 sec)
-Mysql>select ename from emp where ename like “%LL%” or ename like “%LT%”;  => (correct )
+Mysql>select ename from emp where ename like “%LL%” or ename like “%LT%”; 
 +--------+
 | ename  |
 +--------+
@@ -905,6 +885,7 @@ Mysql>select ename from emp where ename like “%LL%” or ename like “%LT%”
 | MILLER |
 +--------+
 2 rows in set (0.16 sec)
+
 55. List names and total remuneration for all employees 
 Mysql>select ename,sal+ifNULL(comm,0) as “total_remuneration” from emp group by ename;
 +--------+---------------------+
