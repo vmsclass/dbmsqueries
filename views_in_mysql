@@ -292,6 +292,22 @@ mysql> SELECT
 +------------------------------------+-------------+-------------+-----------+
 273 rows in set (0.00 sec)
 
+CREATE VIEW customerPayments
+AS 
+SELECT 
+    customerName, 
+    checkNumber, 
+    paymentDate, 
+    amount
+FROM
+    customers
+INNER JOIN
+    payments USING (customerNumber);
+    
+
+
+SELECT * FROM customerPayments;
+
 | Australian Collectors, Co.         | MA765515    | 2004-12-15  |  82261.22 |
 | Australian Collectors, Co.         | NP603840    | 2003-05-31  |   7565.08 |
 | Australian Collectors, Co.         | NR27552     | 2004-03-10  |  44894.74 |
