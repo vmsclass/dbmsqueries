@@ -566,16 +566,147 @@ mysql> SELECT AVG (S.age) FROM Sailors S WHERE S.rating = 10;
 +-------------+
 1 row in set (0.00 sec)
 29)Find the name and age of the oldest sailor" 
+mysql> SELECT S.sname, S.age FROM Sailors S WHERE S.age = (SELECT MAX(S2.age) FROM Sailors S2);
++-------+------+
+| sname | age  |
++-------+------+
+| BOB   | 63.5 |
++-------+------+
+1 row in set (0.03 sec)
+
 30)Count the number of sailors" 
+mysql> select count(*) sailors from sailors;
++---------+
+| sailors |
++---------+
+|      10 |
++---------+
+1 row in set (0.00 sec)
+
 31)Count the number of different sailor names" 
+mysql> select count(distinct sname) from sailors;
++-----------------------+
+| count(distinct sname) |
++-----------------------+
+|                     9 		|
++-----------------------+
+1 row in set (0.00 sec))
+
 32)Find the names of sailors who are older than the oldest sailor with a rating of 10" 
+mysql> SELECT Sname FROM Sailors S WHERE S.age > ( SELECT MAx(S2.age) FROM Sailors S2 WHERE S2.rating = 10);
++--------+
+| Sname  |
++--------+
+| DUSTIN |
+| LUBBER |
+| BOB    |
++--------+
+3 rows in set (0.00 sec)
+
 33)Find the age of the youngest sailor for each rating level" 
+mysql> SELECT S.rating, MIN(S.age) FROM Sailors S GROUP BY S.rating;
++--------+------------+
+| rating | MIN(S.age) |
++--------+------------+
+|      1 |       33.0 |
+|      3 |       25.5 |
+|      7 |       35.0 |
+|      8 |       25.5 |
+|      9 |       35.0 |
+|     10 |       16.0 |
++--------+------------+
+6 rows in set (0.01 sec)
+
 34)Find the age of the youngest sailor who is eligible to vote(i.e., is at least 18 years old) for each rating level with at least two such sailors" 
+mysql> select s.rating ,min(s.age) as minage from sailors s where s.age>=18 group by s.rating;
++--------+--------+
+| rating | minage |
++--------+--------+
+|      1 |   33.0 |
+|      3 |   25.5 |
+|      7 |   35.0 |
+|      8 |   25.5 |
+|      9 |   35.0 |
+|     10 |   35.0 |
++--------+--------+
+6 rows in set (0.00 sec)
+
 35)For each red boat, find the number of reservations for this boat" 
-SELECT B.bid, COUNT (*) AS scount FROM Sailors S, Boats B, Reserves R WHERE S.sid=R.sid AND R.bid=B.bid AND B.color= ‘redʼ GROUP BY B.bid;
+mysql> SELECT B.bid, COUNT(*) AS scount FROM Sailors S, Boats B, Reserves R WHERE S.sid=R.sid AND R.bid=B.bid AND B.color= 'red' GROUP BY B.bid;
++-----+--------+
+| bid | scount |
++-----+--------+
+| 102 |      3 |
+| 104 |      2 |
++-----+--------+
+2 rows in set (0.20 sec)
+(Or)
+mysql> Select b.bid,count(*) as reservationcount from boats b,reserves r where r.bid=b.bid and b.color=’red’ group by b.bid;
++-----+------------------+
+| bid | reservationcount |
++-----+------------------+
+| 102 |                3 |
+| 104 |                2 |
++-----+------------------+
+2 rows in set (0.00 sec)
+
 36)Find the average age of sailors for each rating level that has at least two sailors"
+mysql> Select s.rating,avg(s.age) as avg_age from sailors s group by s.rating having count(*)>1;
++--------+----------+
+| rating | avg_age  |
++--------+----------+
+|      3 | 44.50000 |
+|      7 | 40.00000 |
+|      8 | 40.50000 |
+|     10 | 25.50000 |
++--------+----------+
+4 rows in set (0.01 sec)
+(Or)
+mysql> Select s.rating,avg(s.age) as avg_age from sailors s group by s.rating having 1<(select count(*) from sailors s2 where s.rating=s2.rating);
++--------+----------+
+| rating | avg_age  |
++--------+----------+
+|      3 | 44.50000 |
+|      7 | 40.00000 |
+|      8 | 40.50000 |
+|     10 | 25.50000 |
++--------+----------+
+4 rows in set (0.00 sec)
+
+
 37)"Find the average age of sailors who are of voting age(i.e., at least 18 years old) for each rating level that has at least two sailors"
+
 38)"Find the average age of sailors who are of voting age(i.e., at least 18 years old) for each rating level that has at least two such sailors" 
+mysql> SELECT S.rating, AVG(S.age) AS avgage FROM Sailors S WHERE S.age >=18 GROUP BY S.rating HAVING COUNT(S.sid) > 1;
++--------+----------+
+| rating | avgage   |
++--------+----------+
+|      3 | 44.50000 |
+|      7 | 40.00000 |
+|      8 | 40.50000 |
++--------+----------+
+3 rows in set (0.00 sec)
+
+
 39)Find those ratings for which the average age of sailors in the minimum overall ratings" 
+mysql> Select S.rating From  Sailors S Group by S.rating Having Avg(S.age) <= ALL (Select Avg(S2.age) From Sailors S2 Group by S2.rating);
++--------+
+| rating |
++--------+
+|     10 |
++--------+
+1 row in set (0.00 sec)
+
 40)Find the sailor ids with top 5 rating ranks."
+mysql> select sid,rating from sailors where rating>=8 order by rating desc;
++-----+--------+
+| sid | rating |
++-----+--------+
+|  58 |     10 |
+|  71 |     10 |
+|  74 |      9 |
+|  31 |      8 |
+|  32 |      8 |
++-----+--------+
+5 rows in set (0.00 sec)
 
