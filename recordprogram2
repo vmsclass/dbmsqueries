@@ -698,6 +698,18 @@ mysql> Select S.rating From  Sailors S Group by S.rating Having Avg(S.age) <= AL
 1 row in set (0.00 sec)
 
 40)Find the sailor ids with top 5 rating ranks."
+mysql> select sid from sailors order by rating desc limit 5;
++-----+
+| sid |
++-----+
+|  58 |
+|  71 |
+|  74 |
+|  31 |
+|  32 |
++-----+
+5 rows in set (0.00 sec)
+(OR)
 mysql> select sid,rating from sailors where rating>=8 order by rating desc;
 +-----+--------+
 | sid | rating |
@@ -709,4 +721,17 @@ mysql> select sid,rating from sailors where rating>=8 order by rating desc;
 |  32 |      8 |
 +-----+--------+
 5 rows in set (0.00 sec)
+(OR)
+mysql> select * from sailors order by rating desc limit 5;
++-----+---------+--------+------+
+| sid | sname   | rating | Age  |
++-----+---------+--------+------+
+|  58 | RUSTY   |     10 | 35.0 |
+|  71 | ZORBA   |     10 | 16.0 |
+|  74 | HORATIO |      9 | 35.0 |
+|  31 | LUBBER  |      8 | 55.5 |
+|  32 | ANDY    |      8 | 25.5 |
++-----+---------+--------+------+
+5 rows in set (0.07 sec)
+
 
