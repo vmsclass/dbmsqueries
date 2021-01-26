@@ -1579,8 +1579,17 @@ mysql> alter table emp add column grade decimal(4,0);
 Query OK, 14 rows affected (0.14 sec)
 Records: 14  Duplicates: 0  Warnings: 0 
 97. Modify the emp table, add a Primary Key constraint ‘emp_c’ 
+mysql> alter table emp modify column empno decimal(4,0) primary key;
+Query OK, 0 rows affected (0.35 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 98. Modify the emp table, add constraint REFERENCES to deptno of table emp referring deptno of table dept 
-ALTER TABLE Emp_tab ADD FOREIGN KEY (Deptno) REFERENCES Dept_tab(Deptno);
+(write both quires in your record)
+mysql> alter table dept add primary key(deptno);
+Query OK, 4 rows affected (0.23 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+mysql> alter table emp add foreign key(deptno) references dept(deptno);
+Query OK, 14 rows affected (0.16 sec)
+Records: 14  Duplicates: 0  Warnings: 0
 
 99. Modify the emp table, add constraint CHECK for sal of table emp where sal should be greater than 2500 
 100. Modify the sal column of the emp table to NOT NULL and increases its size to 10 
