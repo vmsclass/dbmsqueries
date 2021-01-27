@@ -316,19 +316,31 @@ mysql> select s.sname,count(b.bid) from sailors s,boats b, reserves r where s.si
 9)"Find the names of sailors who have reserved at least n boats"
 
 10)Find the sids of sailors with age over 20 who have not reserved a red boat" 
-mysql> Select sid from sailors where age>=20 and sid not in (select sid from reserves r, boats b where r.bid=b.bid);
+mysql> Select sid from sailors where age>=20 and sid not in (select sid from reserves r, boats b where r.bid=b.bid and b.color='red');
 +-----+
 | sid |
 +-----+
 |  29 |
 |  32 |
 |  58 |
+|  74 |
 |  85 |
 |  95 |
 +-----+
-5 rows in set (0.00 sec)
+6 rows in set (0.00 sec)
 (or)
 select sid from sailors where age>20 and sid not in (select sid from reserves where bid in (select bid from boats where color='red'));
++-----+
+| sid |
++-----+
+|  29 |
+|  32 |
+|  58 |
+|  74 |
+|  85 |
+|  95 |
++-----+
+6 rows in set (0.00 sec)
 11)Find the names of sailors who have reserved all boats" 
 mysql> SELECT S.sname FROM Sailors S WHERE NOT EXISTS ( SELECT B.bid FROM Boats B WHERE NOT EXISTS ( SELECT R.bid FROM Reserves R WHERE R.bid = B.bid AND R.sid = S.sid ) );
 +--------+
