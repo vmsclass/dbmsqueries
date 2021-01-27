@@ -1,3 +1,15 @@
+**************************************************************************************************
+Contributors :
+-------------
+M. Sudhakara
+T.V. Rathnam
+P. Sasidhar
+**************************************************************************************************
+
+
+
+DBMS Record Program 2:
+---------------------
 
 create table sailors(sid int,sname varchar(20),rating int,Age decimal(4,1),primary key (sid));
 create table boats(bid int,bname varchar(20),color varchar(20),primary key (bid));
