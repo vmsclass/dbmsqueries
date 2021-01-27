@@ -327,6 +327,8 @@ mysql> Select sid from sailors where age>=20 and sid not in (select sid from res
 |  95 |
 +-----+
 5 rows in set (0.00 sec)
+(or)
+select sid from sailors where age>20 and sid not in (select sid from reserves where bid in (select bid from boats where color='red'));
 11)Find the names of sailors who have reserved all boats" 
 mysql> SELECT S.sname FROM Sailors S WHERE NOT EXISTS ( SELECT B.bid FROM Boats B WHERE NOT EXISTS ( SELECT R.bid FROM Reserves R WHERE R.bid = B.bid AND R.sid = S.sid ) );
 +--------+
