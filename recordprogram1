@@ -1546,6 +1546,15 @@ Rows matched: 1  Changed: 0  Warnings: 0
 
 90. All employees who have more than 2 people reporting to them, are to directly report to the PRESIDENT
 
+mysql> select e.empno,count(*) from emp e,emp m where e.mgr=m.empno and m.job='president' group by e.mgr having(count(*)>2);
++-------+----------+
+| empno | count(*) |
++-------+----------+
+|  7566 |        3 |
++-------+----------+
+1 row in set (0.00 sec)
+
+(need to be rechecked)
 
 91. Delete all records from emp
 mysql> delete from emp;
