@@ -1348,12 +1348,20 @@ mysql> select * from emp where sal > all (select sal from emp where job='manager
 | FORD  | ANALYST |     20 |
 +-------+---------+--------+
 2 rows in set (0.01 sec)
-79. Using self join, list all the employees who have joined before their manager 
-SELECT DISTINCT e.Empno AS Empid FROM Emp e INNER JOIN Emp m ON e.Mgr = m.Empid AND e.DateofJoining < m.DateOfJoining;
-select e1.ename as employees,e2.ename as managers from emp e1 join emp e2 on e1.mgr=e2.empno;
-select e1.ename as employees,e2.ename as managers from emp e1 join emp e2 on e1.mgr=e2.empno and job=’manager ’ of hiredate  < hiredate ;
-Select ename from emp 
 
+79. Using self join, list all the employees who have joined before their manager 
+mysql> select e.ename from emp e inner join emp m on e.mgr=m.empno and e.hiredate<m.hiredate;
++-------+
+| ename |
++-------+
+| ALLEN |
+| WARD  |
+| JONES |
+| BLAKE |
+| CLARK |
+| SMITH |
++-------+
+6 rows in set (0.00 sec)
 
 
 
@@ -1536,7 +1544,9 @@ mysql> UPDATE emp SET deptno = 40 WHERE empno = 7839 ;
 Query OK, 0 rows affected (0.02 sec)
 Rows matched: 1  Changed: 0  Warnings: 0
 
-90. All employees who have more than 2 people reporting to them, are to directly report to the PRESIDENT 
+90. All employees who have more than 2 people reporting to them, are to directly report to the PRESIDENT
+
+
 91. Delete all records from emp
 mysql> delete from emp;
 Query OK, 14 rows affected (0.05 sec) 
@@ -1592,6 +1602,10 @@ Query OK, 14 rows affected (0.16 sec)
 Records: 14  Duplicates: 0  Warnings: 0
 
 99. Modify the emp table, add constraint CHECK for sal of table emp where sal should be greater than 2500 
+
+mysql> alter table emp add constraint chk_sal CHECK (sal>2500);
+
+
 100. Modify the sal column of the emp table to NOT NULL and increases its size to 10 
 mysql> alter table emp modify column sal decimal(25,2) NOT NULL;
 Query OK, 14 rows affected (0.14 sec)
