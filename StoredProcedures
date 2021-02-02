@@ -1,1 +1,68 @@
 
+What is a Stored Procedure in MySQL?
+
+Execute the followig query:
+-----------------------------------------------------
+SELECT 
+    customerName, 
+    city, 
+    state, 
+    postalCode, 
+    country
+FROM
+    customers
+ORDER BY customerName;
+------------------------------------------------------
+When you use MySQL Workbench or mysql shell to issue the query to MySQL Server, MySQL processes the query and returns the result set.
+
+If you want to save this query on the database server for execution later, one way to do it is to use a stored procedure.
+
+The following CREATE PROCEDURE statement creates a new stored procedure that wraps the query above:
+
+Example 1:
+------------------------------------------------------
+DELIMITER $$
+
+CREATE PROCEDURE GetCustomers()
+BEGIN
+	SELECT 
+		customerName, 
+		city, 
+		state, 
+		postalCode, 
+		country
+	FROM
+		customers
+	ORDER BY customerName;    
+END$$
+DELIMITER ;
+------------------------------------------------------
+
+Once you save the stored procedure, you can invoke it by using the CALL statement:
+
+------------------------------------------------------
+CALL GetCustomers();
+------------------------------------------------------
+
+And the statement returns the same result as the query.
+
+The first time you invoke a stored procedure, MySQL looks up for the name in the database catalog, compiles the stored procedure’s code, place it in a memory area known as a cache, and execute the stored procedure.
+
+If you invoke the same stored procedure in the same session again, MySQL just executes the stored procedure from the cache without having to recompile it.
+
+Changing DELIMITER:
+-------------------
+
+For example, this statement changes the delimiter to //:
+
+DELIMITER //
+
+SELECT * FROM customers //
+
+SELECT * FROM products //
+
+
+To change the delimiter back to semicolon, you use this statement:
+
+DELIMITER ;
+
