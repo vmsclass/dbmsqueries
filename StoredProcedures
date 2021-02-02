@@ -66,3 +66,40 @@ To change the delimiter back to semicolon, you use this statement:
 
 DELIMITER ;
 
+MySQL CREATE PROCEDURE statement
+--------------------------------
+
+SELECT * FROM products;
+
+
+Example 2:
+
+DELIMITER //
+
+CREATE PROCEDURE GetAllProducts()
+BEGIN
+	SELECT *  FROM products;
+END //
+
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
