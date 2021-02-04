@@ -20,7 +20,7 @@ DECLARE
    num1 number := 95;   
    num2 number := 85;   
 BEGIN   
-   dbms_output.put_line('Outer Variable num1: ' || num1);  
+   dbms_output.put_line('Outer Variable num1: ' || num1);
    dbms_output.put_line('Outer Variable num2: ' || num2);  
    DECLARE   
       -- Local variables  
@@ -105,5 +105,34 @@ BEGIN
       when 'F' then dbms_output.put_line('Passed with Grace');  
       else dbms_output.put_line('Failed');  
    END CASE;  
+END;  
+/
+
+/* 
+Syntax for a basic loop:
+
+LOOP  
+  Sequence of statements;  
+END LOOP;  
+*/
+/*
+Syntax of exit loop:
+LOOP   
+   statements;   
+   EXIT;   
+   {or EXIT WHEN condition;}  
+END LOOP;  
+*/
+
+--program 6: Example of PL/SQL EXIT Loop
+
+DECLARE  
+i NUMBER := 1;  
+BEGIN  
+LOOP  
+EXIT WHEN i>10;  
+DBMS_OUTPUT.PUT_LINE(i);  
+i := i+1;  
+END LOOP;  
 END;  
 /
