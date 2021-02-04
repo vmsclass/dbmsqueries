@@ -136,3 +136,64 @@ i := i+1;
 END LOOP;  
 END;  
 /
+
+/*
+Note: You must follow these steps while using PL/SQL Exit Loop.
+
+Initialize a variable before the loop body
+Increment the variable in the loop.
+You should use EXIT WHEN statement to exit from the Loop. Otherwise the EXIT statement without WHEN condition, the statements in the Loop is executed only once.
+*/
+
+-- PROGRAM 7 : PL/SQL EXIT Loop Example 2
+
+DECLARE   
+VAR1 NUMBER;  
+VAR2 NUMBER;  
+BEGIN   
+VAR1:=100;  
+VAR2:=1;  
+LOOP  
+DBMS_OUTPUT.PUT_LINE (VAR1*VAR2);  
+IF (VAR2=10) THEN  
+EXIT;  
+END IF;  
+VAR2:=VAR2+1;  
+END LOOP;  
+END;  
+/
+
+/*
+Syntax of while loop:
+
+WHILE <condition>   
+ LOOP statements;   
+END LOOP; 
+*/
+
+--PROGRAM 8 : Example of PL/SQL While Loop
+
+DECLARE  
+i INTEGER := 1;  
+BEGIN  
+WHILE i <= 10 LOOP  
+DBMS_OUTPUT.PUT_LINE(i);  
+i := i+1;  
+END LOOP;  
+END;  
+/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
