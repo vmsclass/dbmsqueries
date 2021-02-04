@@ -183,6 +183,119 @@ END LOOP;
 END;  
 /
 
+/*
+Note: You must follow these steps while using PL/SQL WHILE Loop.
+
+Initialize a variable before the loop body.
+Increment the variable in the loop.
+You can use EXIT WHEN statements and EXIT statements in While loop but it is not done often.
+*/
+
+--PROGRAM 9 : PL/SQL WHILE Loop Example 2
+DECLARE   
+VAR1 NUMBER;  
+VAR2 NUMBER;  
+BEGIN   
+VAR1:=200;  
+VAR2:=1;  
+WHILE (VAR2<=10)  
+LOOP  
+DBMS_OUTPUT.PUT_LINE (VAR1*VAR2);  
+VAR2:=VAR2+1;  
+END LOOP;  
+END;  
+/
+
+/*
+
+Syntax of for loop:
+
+FOR counter IN initial_value .. final_value LOOP  
+  LOOP statements;   
+END LOOP;  
+
+--initial_value : Start integer value
+--final_value : End integer value
+
+*/
+
+--program 10 : PL/SQL For Loop Example 1
+
+BEGIN  
+FOR k IN 1..10 LOOP  
+-- note that k was not declared  
+DBMS_OUTPUT.PUT_LINE(k);  
+END LOOP;  
+END;   
+/
+
+/*
+Note: You must follow these steps while using PL/SQL WHILE Loop.
+
+You don't need to declare the counter variable explicitly because it is declared implicitly in the declaration section.
+The counter variable is incremented by 1 and does not need to be incremented explicitly.
+You can use EXIT WHEN statements and EXIT statements in FOR Loops but it is not done often.
+*/
+
+--program 11: PL/SQL For Loop Example 2
+DECLARE   
+VAR1 NUMBER;  
+BEGIN   
+VAR1:=10;  
+FOR VAR2 IN 1..10  
+LOOP  
+DBMS_OUTPUT.PUT_LINE (VAR1*VAR2);  
+END LOOP;  
+END;  
+/
+
+--program 12 : PL/SQL For Loop REVERSE Example 
+
+DECLARE   
+VAR1 NUMBER;  
+BEGIN   
+VAR1:=10;  
+FOR VAR2 IN REVERSE 1..10  
+LOOP  
+DBMS_OUTPUT.PUT_LINE (VAR1*VAR2);  
+END LOOP;  
+END; 
+/
+
+/*
+PL/SQL Continue Statement:
+Syntax:
+
+continue; 
+
+*/
+
+--program 13 :Example of PL/SQL continue statement
+DECLARE  
+  x NUMBER := 0;  
+BEGIN  
+  LOOP -- After CONTINUE statement, control resumes here  
+    DBMS_OUTPUT.PUT_LINE ('Inside loop:  x = ' || TO_CHAR(x));  
+    x := x + 1;  
+    IF x < 3 THEN  
+      CONTINUE;  
+    END IF;  
+    DBMS_OUTPUT.PUT_LINE  
+      ('Inside loop, after CONTINUE:  x = ' || TO_CHAR(x));  
+    EXIT WHEN x = 5;  
+  END LOOP;  
+   
+  DBMS_OUTPUT.PUT_LINE (' After loop:  x = ' || TO_CHAR(x));  
+END;  
+/  
+
+
+
+
+
+
+
+
 
 
 
