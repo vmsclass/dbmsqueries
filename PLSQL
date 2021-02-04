@@ -353,6 +353,130 @@ INOUT parameters: The INOUT parameter can be referenced by the procedure or func
 NOTE  : A procedure may or may not return any value.
 */
 
+/*
+PL/SQL Create Procedure
+
+Syntax for creating procedure:
+
+CREATE [OR REPLACE] PROCEDURE procedure_name  
+    [ (parameter [,parameter]) ]  
+IS  
+    [declaration_section]  
+BEGIN  
+    executable_section  
+[EXCEPTION  
+    exception_section]  
+END [procedure_name]; 
+
+*/
+
+Create procedure example
+In this example, we are going to insert record in user table. So you need to create user table first.
+
+Table creation:
+
+create table user(id number(10) primary key,name varchar2(100));  
+Now write the procedure code to insert record in user table.
+
+--Procedure Code:
+
+create or replace procedure "INSERTUSER"    
+(id IN NUMBER,    
+name IN VARCHAR2)    
+is    
+begin    
+insert into user values(id,name);    
+end;    
+/       
+
+PL/SQL program to call procedure
+Let's see the code to call above created procedure :
+
+BEGIN    
+   insertuser(101,'Rahul');  
+   dbms_output.put_line('record inserted successfully');    
+END;    
+/    
+
+--PL/SQL Drop Procedure
+Syntax for drop procedure:
+
+DROP PROCEDURE procedure_name;  
+
+--Example of drop procedure
+
+DROP PROCEDURE pro1; 
+
+
+PL/SQL Function
+Syntax to create a function:
+
+CREATE [OR REPLACE] FUNCTION function_name [parameters]  
+[(parameter_name [IN | OUT | IN OUT] type [, ...])]  
+RETURN return_datatype  
+{IS | AS}  
+BEGIN  
+   < function_body >  
+END [function_name];  
+
+
+--PROGRAM 15 : PL/SQL Function Example
+--Let's see a simple example to create a function.
+
+create or replace function adder(n1 in number, n2 in number)    
+return number    
+is     
+n3 number(8);    
+begin    
+n3 :=n1+n2;    
+return n3;    
+end;    
+/    
+
+--Now write another program to call the function.
+
+DECLARE    
+   n3 number(2);    
+BEGIN    
+   n3 := adder(11,22);    
+   dbms_output.put_line('Addition is: ' || n3);    
+END;    
+/    
+
+--PL/SQL Recursive Function
+
+--PROGRAM 16 : Example to calculate the factorial of a number
+
+DECLARE  
+   num number;  
+   factorial number;  
+  
+FUNCTION fact(x number)  
+RETURN number   
+IS  
+   f number;  
+BEGIN  
+   IF x=0 THEN  
+      f := 1;  
+   ELSE  
+      f := x * fact(x-1);  
+   END IF;  
+RETURN f;  
+END;  
+  
+BEGIN  
+   num:= 6;  
+   factorial := fact(num);  
+   dbms_output.put_line(' Factorial '|| num || ' is ' || factorial);  
+END;  
+/  
+
+
+
+
+
+
+
 
 
 
