@@ -289,16 +289,69 @@ BEGIN
 END;  
 /  
 
+/*
+PL/SQL GOTO Statement:
+syntax:
+GOTO label_name;  
 
+/*Here the label declaration which contains the label_name encapsulated within the << >> symbol and must be followed by at least one statement to execute.*/
 
+GOTO label_name;  
+ ..  
+..  
+<<label_name>>  
+Statement;  
 
+*/
 
+--PROGRAM 14 : Example of PL/SQL GOTO statement
 
+DECLARE  
+   a number(2) := 30;  
+BEGIN  
+   <<loopstart>>  
+   -- while loop execution   
+   WHILE a < 50 LOOP  
+      dbms_output.put_line ('value of a: ' || a);  
+      a := a + 1;  
+      IF a = 35 THEN  
+         a := a + 1;  
+         GOTO loopstart;  
+      END IF;  
+   END LOOP;  
+END;  
+/  
 
+/*
+Following is a list of some restrictions imposed on GOTO statement.
 
+Cannot transfer control into an IF statement, CASE statement, LOOP statement or sub-block.
+Cannot transfer control from one IF statement clause to another or from one CASE statement WHEN clause to another.
+Cannot transfer control from an outer block into a sub-block.
+Cannot transfer control out of a subprogram.
+Cannot transfer control into an exception handler.
+*/
 
+/*
+PL/SQL Procedure
+The PL/SQL stored procedure or simply a procedure is a PL/SQL block which performs one or more specific tasks. It is just like procedures in other programming languages.
 
+The procedure contains a header and a body.
 
+Header: The header contains the name of the procedure and the parameters or variables passed to the procedure.
+Body: The body contains a declaration section, execution section and exception section similar to a general PL/SQL block.
+*/
+
+/*
+How to pass parameters in procedure:
+When you want to create a procedure or function, you have to define parameters .There is three ways to pass parameters in procedure:
+
+IN parameters: The IN parameter can be referenced by the procedure or function. The value of the parameter cannot be overwritten by the procedure or the function.
+OUT parameters: The OUT parameter cannot be referenced by the procedure or function, but the value of the parameter can be overwritten by the procedure or function.
+INOUT parameters: The INOUT parameter can be referenced by the procedure or function and the value of the parameter can be overwritten by the procedure or function.
+
+NOTE  : A procedure may or may not return any value.
+*/
 
 
 
