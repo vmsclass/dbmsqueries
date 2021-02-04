@@ -33,6 +33,10 @@ BEGIN
 END;  
 /  
 
+/*Syntax to declare a constant:
+
+constant_name CONSTANT datatype := VALUE; */
+
 --PROGRAM 3 : Example of PL/SQL constant
 DECLARE  
    -- constant declaration  
@@ -55,3 +59,25 @@ BEGIN
    dbms_output.put_line('Area: ' || area);  
 END;  
 /  
+/* Syntax: (IF-THEN statement):
+
+IF condition   
+THEN   
+Statement: {It is executed when condition is true}  
+END IF;  */
+
+--PROGRAM 4 : Example of PL/SQL If Statement
+
+DECLARE  
+   a number(3) := 500;  
+BEGIN  
+   -- check the boolean condition using if statement   
+   IF( a < 20 ) THEN  
+      -- if condition is true then print the following    
+      dbms_output.put_line('a is less than 20 ' );  
+   ELSE  
+      dbms_output.put_line('a is not less than 20 ' );  
+   END IF;  
+   dbms_output.put_line('value of a is : ' || a);  
+END;
+/
