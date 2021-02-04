@@ -1612,7 +1612,9 @@ Records: 14  Duplicates: 0  Warnings: 0
 
 99. Modify the emp table, add constraint CHECK for sal of table emp where sal should be greater than 2500 
 
-mysql> alter table emp add constraint chk_sal CHECK (sal>2500);
+mysql> alter table emp add constraint sal CHECK (sal>2500);
+Query OK, 0 rows affected (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 0
 
 
 100. Modify the sal column of the emp table to NOT NULL and increases its size to 10 
