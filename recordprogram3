@@ -286,3 +286,23 @@ begin
 end;
 /
 
+Program 8: WRITE A PL/SQL CODE BLOCK TO CALCULATE THE AREA OF A CIRCLE FOR A VALUE OF RADIUS VARYING FROM 3 TO 7. STORE THE RADIUS AND THE CORRESPONDING VALUES OF CALCULATED AREA IN A TABLE AREAS.
+
+create table areas ( r number(2), area number (14,2));
+
+declare
+r number(5);
+area number(14,2);
+pi constant number (4,2):=3.14;
+begin
+r:=3;
+while r<=7
+loop
+area:=pi*power(r,2);
+insert into areas values(r,area );
+r:=r+1;
+end loop;
+end;
+
+select * from areas;
+
