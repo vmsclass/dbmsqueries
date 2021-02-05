@@ -159,3 +159,27 @@ BEGIN
 END;
 /
 
+Program 5: Write a PL/SQL program to display the number in reverse order.
+
+declare
+ n number;
+ i number;
+ rev number:=0;
+ r number;
+ 
+begin
+ n:=&n;
+ 
+ while n>0
+ loop
+ r:=mod(n,10);
+ rev:=(rev*10)+r;
+ n:=trunc(n/10);
+ end loop;
+ 
+ dbms_output.put_line('reverse is '||rev);
+ 
+end;
+/
+
+
