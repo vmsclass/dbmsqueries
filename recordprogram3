@@ -72,3 +72,64 @@ begin
 end;
 /
 
+Program 3: Write a PL/SQL program to find the total and average of 6 subjects and display the grade.
+
+Support program1:
+
+--To find sum and avg of three numbers  
+DECLARE 
+  
+    -- Assigning 12 into a  
+    a     NUMBER := 12;  
+      
+    -- Assigning 14 into b  
+    b     NUMBER := 14;  
+      
+    -- Assigning 20 into c  
+    c     NUMBER := 20;  
+      
+    -- Declare variable for sum   
+    -- Of Three number (a, b, c)  
+    sumOf3 NUMBER;  
+      
+    -- Declare variable for average  
+    avgOf3 NUMBER;  
+      
+--Start Block  
+BEGIN 
+  
+    -- Assigning sum of a, b and c into sumOf3  
+    sumOf3 := a + b + c;  
+  
+    -- Assigning average  of a, b and c into avgOf3  
+    avgOf3 := sumOf3 / 3;  
+  
+    --print Result  sum of a, b, c number  
+    dbms_output.Put_line('Sum = ' 
+                         ||sumOf3);  
+  
+    --print Average  sum of a, b, c number  
+    dbms_output.Put_line('Average = ' 
+                         ||avgOf3);  
+END;  
+  
+--End Program 
+
+Support program 2:
+
+DECLARE
+mark NUMBER :=25;
+BEGIN
+dbms_output.put_line('Program started.');
+IF( mark >= 70) THEN 
+dbms_output.put_line('Grade A'); 
+ELSIF(mark >= 40 AND mark < 70) THEN 
+dbms_output.put_line('Grade B'); 
+ELSIF(mark >=35 AND mark < 40) THEN 
+dbms_output.put_line('Grade C');
+ELSE
+dbms_output.put_line('No Grade');
+END IF;
+dbms_output.put_line('Program completed.'); 
+END;
+/
