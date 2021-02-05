@@ -134,6 +134,60 @@ dbms_output.put_line('Program completed.');
 END;
 /
 
+Actual program:
+
+DECLARE
+    a     NUMBER;  
+    b     NUMBER;    
+    c     NUMBER;
+    d     NUMBER;
+    e     NUMBER;
+    f     NUMBER;  
+       
+    -- Of SIX number (a, b, c,d,e,f)  
+    SumOf6 NUMBER;  
+     
+    -- Declare variable for average  
+    average NUMBER;  
+   
+   
+     
+--Start Block  
+BEGIN
+
+    a:=&a;
+    b:=&b;
+    c:=&c;
+    d:=&d;
+    e:=&e;  
+    f:=&f ;
+    -- Assigning sum of a, b and c into sumOf3  
+    SumOf6 := a + b + c + d + e + f;  
+ 
+    -- Assigning average  of a, b and c into avgOf3  
+    average := SumOf6 / 6;  
+ 
+    --print Result  sum of a, b, c, d,e ,f number  
+    dbms_output.Put_line('Sum = '
+                         ||SumOf6);  
+ 
+    --print Average  sum of a, b, c, d, e,f number  
+    dbms_output.Put_line('Average = '
+                         ||average);  
+
+   dbms_output.put_line('Program started.');
+   IF( average >= 70) THEN
+       dbms_output.put_line('Grade A');
+   ELSIF(average >= 40 AND average < 70) THEN
+       dbms_output.put_line('Grade B');
+   ELSIF(average >=35 AND average < 40) THEN
+       dbms_output.put_line('Grade C');
+   ELSE
+       dbms_output.put_line('No Grade');
+   END IF;
+dbms_output.put_line('Program completed.');
+END;
+/
 Program 4: Write a PL/SQL program to find the sum of digits in a given number.
 
 DECLARE 
