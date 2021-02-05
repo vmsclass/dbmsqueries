@@ -133,3 +133,29 @@ END IF;
 dbms_output.put_line('Program completed.'); 
 END;
 /
+
+Program 4: Write a PL/SQL program to find the sum of digits in a given number.
+
+DECLARE 
+  
+    --Declare variable n, temp_sum   
+    -- and r of datatype number  
+    n        INTEGER;  
+    temp_sum INTEGER;  
+    r        INTEGER;  
+BEGIN 
+    n := 123456;  
+    temp_sum := 0;  
+  
+    -- here we check condition with the help of while loop  
+    -- here <> symbol represent for not null  
+    WHILE n <> 0 LOOP  
+        r := MOD(n, 10);  
+        temp_sum := temp_sum + r;  
+        n := Trunc(n / 10);  
+    END LOOP;  
+    dbms_output.Put_line('sum of digits = ' 
+                         || temp_sum);  
+END;
+/
+
