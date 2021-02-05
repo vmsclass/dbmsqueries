@@ -303,6 +303,25 @@ insert into areas values(r,area );
 r:=r+1;
 end loop;
 end;
+/
 
 select * from areas;
+
+
+Program 9: Write a PL/SQL program to accept a string and remove the vowels from the string. (When ‘Hello’
+passed to the program it should display ‘Hll’ removing e and o from the word Hello).
+
+declare
+   vnewstring varchar2(100);
+begin
+   vnewstring := regexp_replace('&vnewstring', '[aeiouAEIOU]','');
+   dbms_output.put_line('The new string is: ' || vnewstring);
+end;
+/
+
+
+
+
+
+
 
