@@ -1,0 +1,69 @@
+
+
+
+Create customers table and have records:
+
+ID	NAME	AGE	ADDRESS	SALARY
+1	Ramesh	23	Allahabad	20000
+2	Suresh	22	Kanpur	22000
+3	Mahesh	24	Ghaziabad	24000
+4	Chandan	25	Noida	26000
+5	Alex	21	Paris	28000
+6	Sunita	20	Delhi	30000
+
+Implicit cursor:
+Let's execute the following program to update the table and increase salary of each customer by 5000. Here, SQL%ROWCOUNT attribute is used to determine the number of rows affected:
+
+
+PL/SQL Implicit Cursor Example
+------------------------------
+
+DECLARE   
+   total_rows number(2);  
+BEGIN  
+   UPDATE  customers  
+   SET salary = salary + 5000;  
+   IF sql%notfound THEN  
+      dbms_output.put_line('no customers updated');  
+   ELSIF sql%found THEN  
+      total_rows := sql%rowcount;  
+      dbms_output.put_line( total_rows || ' customers updated ');  
+   END IF;   
+END;  
+/
+
+Output:
+6 customers updated
+PL/SQL procedure successfully completed.
+
+PL/SQL Explicit Cursors
+-----------------------
+Create customers table and have records:
+ID	NAME	AGE	ADDRESS	SALARY
+1	Ramesh	23	Allahabad	20000
+2	Suresh	22	Kanpur	22000
+3	Mahesh	24	Ghaziabad	24000
+4	Chandan	25	Noida	26000
+5	Alex	21	Paris	28000
+6	Sunita	20	Delhi	30000
+
+Create procedure:
+
+Execute the following program to retrieve the customer name and address.
+
+DECLARE  
+   c_id customers.id%type;  
+   c_name customers.name%type;  
+   c_addr customers.address%type;  
+   CURSOR c_customers is  
+      SELECT id, name, address FROM customers;  
+BEGIN  
+   OPEN c_customers;  
+   LOOP  
+      FETCH c_customers into c_id, c_name, c_addr;  
+      EXIT WHEN c_customers%notfound;  
+      dbms_output.put_line(c_id || ' ' || c_name || ' ' || c_addr);  
+   END LOOP;  
+   CLOSE c_customers;  
+END;  
+/  
