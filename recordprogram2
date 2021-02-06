@@ -207,7 +207,16 @@ mysql> SELECT sname FROM Sailors S, Reserves R WHERE S.sid = R.sid;
 | HORATIO |
 +---------+
 10 rows in set (0.00 sec)
-
+(or)
+mysql> SELECT DISTINCT sname FROM Sailors S, Reserves R WHERE S.sid = R.sid;
++---------+
+| sname   |
++---------+
+| DUSTIN  |
+| LUBBER  |
+| HORATIO |
++---------+
+3 rows in set (0.43 sec)
 
 
 
