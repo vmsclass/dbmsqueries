@@ -11,8 +11,8 @@ P. Sasidhar
 DBMS Record Program 1:
 ---------------------
 
-mysql> CREATE TABLE emp (empnodecimal(4,0) NOT NULL, ename varchar(10) default NULL,job varchar(9) default NULL, mgr decimal(4,0) default NULL,hiredate date default NULL, sal decimal(7,2) default NULL,comm decimal(7,2) default NULL, deptno decimal(2,0) default NULL );
-CREATE TABLE dept (deptnodecimal(2,0) default NULL, dname varchar(14) default NULL,loc varchar(13) default NULL );
+mysql> CREATE TABLE emp (empno decimal(4,0) NOT NULL, ename varchar(10) default NULL,job varchar(9) default NULL, mgr decimal(4,0) default NULL,hiredate date default NULL, sal decimal(7,2) default NULL,comm decimal(7,2) default NULL, deptno decimal(2,0) default NULL );
+CREATE TABLE dept (deptno decimal(2,0) default NULL, dname varchar(14) default NULL,loc varchar(13) default NULL );
 INSERT INTO emp VALUES (7369,'SMITH','CLERK',7902,'1980-12-17 ',800.00,NULL,20);
 INSERT INTO emp VALUES (7499,'ALLEN','SALESMAN',7698,'1981-02-20', 1600.00, 300.00,30);
 INSERT INTO emp VALUES (7521,'WARD','SALESMAN',7698,'1981-02-22 ', 1250.00, 500.00,30);
