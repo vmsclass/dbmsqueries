@@ -1,0 +1,76 @@
+Exp -6: Procedures
+-------------------
+
+a) Create the procedure for palindrome of given number.
+
+Step 1: Create a procedure
+---------------------------
+
+create or replace procedure palindrome(str in varchar2)
+is
+len number:=0;
+cnt number :=0;
+j number :=0;
+begin
+len := length(str);
+for i in 1..len loop
+j := i-1;
+if substr(str,i,1) = substr(str,len-j,1) then
+cnt := cnt+1;
+end if;
+end loop;
+if cnt = len then
+dbms_output.put_line('palindrome');
+else
+dbms_output.put_line('not palindrome');
+end if;
+end;
+
+Step 2: Execute procedure:
+--------------------------
+SQL> exec palindrome('madam')
+palindrome
+
+PL/SQL procedure successfully completed.
+
+
+
+Testcase 2: 
+-----------
+SQL> exec palindrome('hello');
+not palindrome
+
+PL/SQL procedure successfully completed.
+
+b)Write the PL/SQL programs to create the procedure for factorial of given number
+
+Step 1: Create procedure
+-------------------------
+
+create or replace procedure fact2(x in number)
+is
+result number:=1;
+i number:=1;
+begin
+while(i<=x)
+loop
+result:=result*i;
+i:=i+1;
+end loop;
+dbms_output.put_line('fact is '||result);
+end;
+/
+
+Step 2: Execute procedure:
+--------------------------
+SQL> exec fact2(5);
+fact is 120
+
+PL/SQL procedure successfully completed.
+
+Testcase 2:
+----------
+SQL> exec fact2(6);
+fact is 720
+
+PL/SQL procedure successfully completed.
