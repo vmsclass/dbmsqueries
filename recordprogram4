@@ -45,3 +45,39 @@ PL/SQL procedure successfully completed.
 
 b) Create function to the reverse of given number
 
+Step 1: Create a function
+-------------------------
+create or replace function rever(n number) return number is
+num number:=n;
+rev number:=0;
+r number;
+begin
+while(num>0)
+loop
+r:=mod(num,10);
+rev:=(rev*10)+r;
+num:=trunc(num/10);
+end loop;
+return(rev);
+end rever;
+/
+
+Step 2: Main program
+--------------------
+declare
+r number;
+n number:=&n;
+begin
+r:=rever(n);
+dbms_output.put_line(r);
+end;
+/
+
+
+Output:
+Enter value for n: 785
+old   3: n number:=&n;
+new   3: n number:=785;
+587
+
+PL/SQL procedure successfully completed.
