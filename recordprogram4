@@ -1,0 +1,47 @@
+Exp 4: Procedures and Functions
+-------------------------------
+
+a) Create a function to find the factorial of a given number.
+
+Step 1: Create a function
+-------------------------
+
+create or replace function fact(n number) return number is
+i number(3);
+f number:=1;
+begin
+for i in 1..n
+loop
+f:=f*i;
+end loop;
+return(f);
+end fact;
+/
+
+Step 2: set the serveroutput on
+-------------------------------
+
+set serveroutput on
+
+Step 3: Main program
+---------------------
+declare
+f number(3);
+n number(3):=&n;
+begin
+f:=fact(n);
+dbms_output.put_line('factorial='||f);
+end;
+/
+
+Output:
+
+Enter value for n: 5
+old   3: n number(3):=&n;
+new   3: n number(3):=5;
+factorial=120
+
+PL/SQL procedure successfully completed.
+
+b) Create function to the reverse of given number
+
