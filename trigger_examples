@@ -1,0 +1,164 @@
+Triggers are stored programs, which are automatically executed or fired when some events occur. Triggers are, in fact, written to be executed in response to any of the following events −
+
+A database manipulation (DML) statement (DELETE, INSERT, or UPDATE)
+
+A database definition (DDL) statement (CREATE, ALTER, or DROP).
+
+A database operation (SERVERERROR, LOGON, LOGOFF, STARTUP, or SHUTDOWN).
+
+Syntax:
+
+CREATE [OR REPLACE ] TRIGGER trigger_name  
+{BEFORE | AFTER | INSTEAD OF }  
+{INSERT [OR] | UPDATE [OR] | DELETE}  
+[OF col_name]  
+ON table_name  
+[REFERENCING OLD AS o NEW AS n]  
+[FOR EACH ROW]  
+WHEN (condition)   
+DECLARE 
+   Declaration-statements 
+BEGIN  
+   Executable-statements 
+EXCEPTION 
+   Exception-handling-statements 
+END; 
+
+
+Example 1: 
+
+Step 1: Create a table customers and insert the following data by the given attributes. Once done, select statement will display the following result.
+
+Select * from customers;  
+
++----+----------+-----+-----------+----------+ 
+| ID | NAME     | AGE | ADDRESS   | SALARY   | 
++----+----------+-----+-----------+----------+ 
+|  1 | Ramesh   |  32 | Ahmedabad |  2000.00 | 
+|  2 | Khilan   |  25 | Delhi     |  1500.00 | 
+|  3 | kaushik  |  23 | Kota      |  2000.00 | 
+|  4 | Chaitali |  25 | Mumbai    |  6500.00 | 
+|  5 | Hardik   |  27 | Bhopal    |  8500.00 | 
+|  6 | Komal    |  22 | MP        |  4500.00 | 
++----+----------+-----+-----------+----------+ 
+
+
+Step 2: Creating a row-level trigger. 
+(This trigger will display the salary difference between the old values and new values)
+
+CREATE OR REPLACE TRIGGER display_salary_changes 
+BEFORE DELETE OR INSERT OR UPDATE ON customers 
+FOR EACH ROW 
+WHEN (NEW.ID > 0) 
+DECLARE 
+   sal_diff number; 
+BEGIN 
+   sal_diff := :NEW.salary  - :OLD.salary; 
+   dbms_output.put_line('Old salary: ' || :OLD.salary); 
+   dbms_output.put_line('New salary: ' || :NEW.salary); 
+   dbms_output.put_line('Salary difference: ' || sal_diff); 
+END; 
+/
+
+Step 3: Do any Insert/ Update/ Delete DML operation. For example, if i do insert a record in this table, then trigger is triggered.
+
+INSERT INTO CUSTOMERS (ID,NAME,AGE,ADDRESS,SALARY) 
+VALUES (7, 'Kriti', 22, 'HP', 7500.00 ); 
+
+For example, if you do update, then also trigger is triggered.
+
+UPDATE customers 
+SET salary = salary + 500 
+WHERE id = 2;
+
+
+Example 2: Check the salary difference using procedure.
+
+DECLARE   
+   total_rows number(2);  
+BEGIN  
+   UPDATE  customers  
+   SET salary = salary + 5000;  
+   IF sql%notfound THEN  
+      dbms_output.put_line('no customers updated');  
+   ELSIF sql%found THEN  
+      total_rows := sql%rowcount;  
+      dbms_output.put_line( total_rows || ' customers updated ');  
+   END IF;   
+END;  
+/
+
+
+Example 3: Check age of the student before inserting or updating (i.e. less than 30 or not)
+
+Step 1: Create a table Student and insert the following data
+
+ROLLNO	SNAME	AGE	COURSE
+11	Anu	20	BSC
+12	Asha	21	BCOM
+13	Arpit	18	BCA
+14	Chetan	20	BCA
+15	Nihal	19	BBA
+
+Step 2: Create a trigger
+
+CREATE OR REPLACE TRIGGER CheckAge
+BEFORE
+INSERT OR UPDATE ON student
+FOR EACH ROW
+BEGIN
+	IF :new.Age>30 THEN
+		raise_application_error(-20001, 'Age should not be greater than 30');
+	END IF;
+END;
+
+After initializing the trigger CheckAge, whenever we will insert any new values or update the existing values in the above table STUDENT our trigger will check the age before executing INSERT or UPDATE statements and according to the result of triggering restriction or condition it will execute the statement.
+
+Let's take a few examples and try to understand this,
+
+Ex: (Try the following DML statement and observe the output)
+
+INSERT into STUDENT values(16, 'Saina', 32, 'BCOM');
+
+Ex: (Try the following DML statement and observe the output)
+
+INSERT into STUDENT values(17, 'Anna', 22, 'BCOM');
+
+Ex: (Try the following DML statement and observe the output)
+
+UPDATE STUDENT set age=31 where ROLLNO=12; 
+
+Ex: (Try the following DML statement and observe the output)
+
+UPDATE STUDENT set age=23 where ROLLNO=12; 
+
+
+Example 4: Trigger execute BEFORE to convert name field lowercase to uppercase.
+
+Step 1: Create a stuent table with two attributes.
+
+create table student(id int,name varchar(10));
+
+Step 2: Insert two records in this table and observe the result.
+
+Step 3: Now create a trigger with the following code.
+
+CREATE or REPLACE TRIGGER trg1
+BEFORE
+INSERT ON student
+FOR EACH ROW
+BEGIN
+:new.name := upper(:new.name);
+END;
+/
+
+Step 4: Now insert the following record and observe the result.
+
+insert into student(id,name) values(1,'sudha');
+
+select * from student;
+
+insert into student(id,name) values(2,'rathnam');
+
+select * from student;
+
