@@ -1,0 +1,28 @@
+--To write a Cursor to find employee with given job and dept no.
+-------------
+code:-
+
+declare
+e_name emp.ename%type;
+e_job emp.job%type;
+e_deptno emp.deptno%type;
+cursor e_amployee is
+select ename,job,deptno from emp where job='manager' or deptno=10 ;
+begin
+open e_amployee;
+loop
+    fetch e_amployee into e_name, e_job, e_deptno;
+    exit when e_amployee%notfound;
+    dbms_output.put_line(e_name || ' ' || e_job || ' ' || e_deptno);
+end loop;
+close e_amployee;
+end;
+/
+
+output:
+
+CLARK  MANAGER   10
+KING   PRESIDENT 10
+MILLER CLERK     10
+
+PL/SQL procedure successfully completed.
