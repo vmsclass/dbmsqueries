@@ -1,0 +1,159 @@
+TRIGGERS
+--------
+
+Ex 1: Insert row in employee table using Triggers.
+
+Step 1: Create an emp table.
+
+create table emp(
+empno decimal(4,0) NOT NULL,
+ename varchar(10) default NULL,
+job varchar(9) default NULL,
+mgr decimal(4,0) default NULL,
+hiredate date default NULL,
+sal decimal(7,2) default NULL,
+comm decimal(7,2) default NULL,
+deptno decimal(2,0) default NULL);
+
+
+Step 2: Creating a trigger : after insert it display a message that the record with a specific empno is inserted.
+
+create or replace trigger insert_Trigger after insert on emp
+for each row
+begin
+dbms_output.put_line('New record '||:NEW.empno||' inserted');
+end;
+/
+
+Step 3: Insert a record and observe the result.
+
+insert into emp values(9000,'XXXX','SALESMAN',7698,'20-FEB-1981',1600.00,300.00,30);
+
+Output:
+New record 9000 inserted
+
+1 row created.
+
+
+Ex 2: Insert a row in emp1 table so that through the trigger it inserts the record in emp2 table.
+
+Step 1: Create two tables emp1, and emp2.
+
+create table emp1(
+empno decimal(4,0) NOT NULL,
+ename varchar(10) default NULL,
+job varchar(9) default NULL,
+mgr decimal(4,0) default NULL,
+hiredate date default NULL,
+sal decimal(7,2) default NULL,
+comm decimal(7,2) default NULL,
+deptno decimal(2,0) default NULL);
+
+
+create table emp2(
+empno decimal(4,0) NOT NULL,
+ename varchar(10) default NULL,
+job varchar(9) default NULL,
+mgr decimal(4,0) default NULL,
+hiredate date default NULL,
+sal decimal(7,2) default NULL,
+comm decimal(7,2) default NULL,
+deptno decimal(2,0) default NULL);
+
+Step 2: Create a trigger 
+
+create or replace trigger insert_trigger2 after insert on emp1
+for each row
+begin
+insert into emp2(empno,ename,job,mgr,hiredate,sal,comm,deptno) values(:new.empno,:new.ename,:new.job,:new.mgr,:new.hiredate,:new.sal,:new.comm,:new.deptno);
+end;
+/
+
+Step 3: Insert a record in emp1 table (automatically thorugh the trigger, this record also inserted in emp2 table).
+
+insert into emp1 values(7499,'ALLEN','SALESMAN',7698,'20-FEB-1981',1600.00,300.00,30);
+
+Step 4: display the data in emp1 table.
+
+select * from emp1;
+    EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+select * from emp2;
+
+    EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+
+Step 5: Similarly insert the following records in emp1 table.
+
+insert into emp1 values(7521,'WARD','SALESMAN',7698,'22-FEB-1981',1250.00,500.00,30);
+insert into emp1 values(7566,'JONES','MANAGER',7839,'02-MAR-1981',2975.00,NULL,20);
+insert into emp1 values(7654,'MARTIN','SALESMAN',7698,'28-SEP-1981',1250.00,1400.00,30);
+insert into emp1 values(7698,'BLAKE','MANAGER',7839,'01-MAY-1981',2850.00,NULL,30);
+insert into emp1 values(7782,'CLARK','MANAGER',7839,'09-JUN-1981',2450.00,NULL,10);
+insert into emp1 values(7788,'SCOTT','ANALYST',7566,'09-DEC-1981',3000.00,NULL,20);
+insert into emp1 values(7839,'KING','PRESIDENT',NULL,'11-OCT-1981',5000.00,NULL,10);
+insert into emp1 values(7844,'TURNER','SALESMAN',7698,'08-SEP-1081',1500.00,0.00,30);
+insert into emp1 values(7876,'ADAMS','CLERK',7788,'12-JAN-1983',1100.00,NULL,20);
+insert into emp1 values(7900,'JAMES','CLERK',7698,'03-DEC-1981',950.00,NULL,30);
+insert into emp1 values(7902,'FORD','ANALYST',7566,'03-DEC-1981',3000.00,NULL,20);
+insert into emp1 values(7934,'MILLER','CLERK',7782,'23-JAN-1982',1300.00,NULL,10);
+
+
+Step 6: Display the data in both employee tables.
+
+select * from emp1;
+
+select * from emp2;
+
+Step6: Display only the employee ids of the emp1 and emp2 tables.
+(Note: This statement is to display only the employee ids to enter in the record instead of writing all the records)
+
+select empno from emp1;
+     EMPNO
+----------
+      7499
+      7521
+      7566
+      7654
+      7698
+      7782
+      7788
+      7839
+      7844
+      7876
+      7900
+
+     EMPNO
+----------
+      7902
+      7934
+      
+      
+select empno from emp2;
+     EMPNO
+----------
+      7499
+      7521
+      7566
+      7654
+      7698
+      7782
+      7788
+      7839
+      7844
+      7876
+      7900
+
+     EMPNO
+----------
+      7902
+      7934
