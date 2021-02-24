@@ -1,4 +1,5 @@
-Triggers are stored programs, which are automatically executed or fired when some events occur. Triggers are, in fact, written to be executed in response to any of the following events −
+Triggers are stored programs, which are automatically executed or fired when some events occur. 
+Triggers are, in fact, written to be executed in response to any of the following events −
 
 A database manipulation (DML) statement (DELETE, INSERT, or UPDATE)
 
