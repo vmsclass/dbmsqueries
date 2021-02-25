@@ -1,6 +1,7 @@
 --To write a Cursor to find employee with given job and dept no.
 -------------
-code:-
+
+Program:
 
 declare
 e_name emp.ename%type;
@@ -24,5 +25,92 @@ output:
 CLARK  MANAGER   10
 KING   PRESIDENT 10
 MILLER CLERK     10
+
+PL/SQL procedure successfully completed.
+
+
+Program 2: 
+
+Testcase 1:
+
+Step 1: Create a table
+
+create table emp2(
+empno decimal(4,0) NOT NULL,
+ename varchar(10) default NULL,
+job varchar(9) default NULL,
+mgr decimal(4,0) default NULL,
+hiredate date default NULL,
+sal decimal(7,2) default NULL,
+comm decimal(7,2) default NULL,
+deptno decimal(2,0) default NULL); 
+
+Step 2: Insert records in to the table.
+
+insert into emp2 values(7521,'WARD','SALESMAN',7698,'22-FEB-1981',1250.00,500.00,30);
+insert into emp2 values(7566,'JONES','MANAGER',7839,'02-MAR-1981',2975.00,NULL,20);
+insert into emp2 values(7654,'MARTIN','SALESMAN',7698,'28-SEP-1981',1250.00,1400.00,30);
+insert into emp2 values(7698,'BLAKE','MANAGER',7839,'01-MAY-1981',2850.00,NULL,30);
+insert into emp2 values(7782,'CLARK','MANAGER',7839,'09-JUN-1981',2450.00,NULL,10);
+insert into emp2 values(7788,'SCOTT','ANALYST',7566,'09-DEC-1981',3000.00,NULL,20);
+insert into emp2 values(7839,'KING','PRESIDENT',NULL,'11-OCT-1981',5000.00,NULL,10);
+insert into emp2 values(7844,'TURNER','SALESMAN',7698,'08-SEP-1081',1500.00,0.00,30);
+insert into emp2 values(7876,'ADAMS','CLERK',7788,'12-JAN-1983',1100.00,NULL,20);
+insert into emp2 values(7900,'JAMES','CLERK',7698,'03-DEC-1981',950.00,NULL,30);
+insert into emp2 values(7902,'FORD','ANALYST',7566,'03-DEC-1981',3000.00,NULL,20);
+insert into emp2 values(7934,'MILLER','CLERK',7782,'23-JAN-1982',1300.00,NULL,10);
+
+
+Step 3: Set the serveroutput
+SET SERVEROUPUT ON;
+
+Step 4: Create a cursor
+
+DECLARE   
+   total_rows number(2);  
+BEGIN  
+   UPDATE emp2 
+   SET sal = sal + 5000;  
+   IF sql%notfound THEN  
+      dbms_output.put_line('None of the salarys were updated');  
+   ELSIF sql%found THEN  
+      total_rows := sql%rowcount;  
+      dbms_output.put_line( total_rows || ' salarys are updated ');  
+   END IF;   
+END;  
+/  
+
+12 salarys are updated.
+
+Step 5: Update the salary of all the employees
+UPDATE EMP2 SET SAL=SAL+100;
+
+12 rows updated.
+Step 5: Update the salary of empno 7934.
+UPDATE EMP2 SET SAL=SAL+100 where empno=7934;
+
+Output: 
+1 row updated.
+
+PL/SQL procedure successfully completed.
+
+Testcase:
+
+Step 1: Create emp3 table.
+
+create table emp3(
+empno decimal(4,0) NOT NULL,
+ename varchar(10) default NULL,
+job varchar(9) default NULL,
+mgr decimal(4,0) default NULL,
+hiredate date default NULL,
+sal decimal(7,2) default NULL,
+comm decimal(7,2) default NULL,
+deptno decimal(2,0) default NULL); 
+
+Step 2: Create the cursor as shown in Testcase 1, Step 4. Then you get the following output.
+
+Output:
+None of the salarys were updated
 
 PL/SQL procedure successfully completed.
