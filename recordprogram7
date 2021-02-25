@@ -31,6 +31,11 @@ PL/SQL procedure successfully completed.
 
 Program 2: 
 
+Write a PL/SQL block using implicit cursor that will display message, the salaries of all the
+employees in the ‘employee’ table are updated. If none of the employee’s salary is updated we get
+a message 'None of the salaries were updated'. Else we get a message like for example, 'Salaries for
+1000 employees are updated' if there are 1000 rows in ‘employee’ table
+
 Testcase 1:
 
 Step 1: Create a table
